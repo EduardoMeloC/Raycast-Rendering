@@ -41,3 +41,13 @@ function UUID()
     end
     return (("xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx"):gsub("[xy]", fn))
 end
+
+-- Constants
+
+Color = {}
+Color.red = {1, 0, 0}
+Color.green = {0, 1, 0}
+Color.blue = {0, 0, 1}
+Color.white = {1, 1, 1}
+Color.black = {0, 0, 0}
+Color.gray = {0.2, 0.2, 0.2}

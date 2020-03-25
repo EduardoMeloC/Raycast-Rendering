@@ -34,15 +34,22 @@ function Graph:draw()
 end
 
 function Graph:update(dt)
-    if(love.mouse.isDown(1)) then
-        local i = math.floor(love.mouse.getY()/self.rect_height)
-        local j = math.floor(love.mouse.getX()/self.rect_width)
-        self.mapData.grid[i][j] = NodeType.Blocked
-        self.nodes[i][j].nodeType =  NodeType.Blocked
-    elseif(love.mouse.isDown(2)) then
-        local i = math.floor(love.mouse.getY()/self.rect_height)
-        local j = math.floor(love.mouse.getX()/self.rect_width)
-        self.mapData.grid[i][j] = NodeType.Open
-        self.nodes[i][j].nodeType =  NodeType.Open
-    end
+    --[[
+        if(love.mouse.isDown(1)) then
+            local i = math.floor(love.mouse.getY()/self.rect_height)
+            local j = math.floor(love.mouse.getX()/self.rect_width)
+            self.mapData.grid[i][j] = NodeType.Blocked
+            self.nodes[i][j].nodeType =  NodeType.Blocked
+        elseif(love.mouse.isDown(2)) then
+            local i = math.floor(love.mouse.getY()/self.rect_height)
+            local j = math.floor(love.mouse.getX()/self.rect_width)
+            self.mapData.grid[i][j] = NodeType.Open
+            self.nodes[i][j].nodeType =  NodeType.Open
+        end
+    ]]
+end
+
+function Graph:getNode(posX, posY)
+    -- this function returns the node by the given position (not index)
+    return self.nodes[math.floor(posY/self.rect_height)][math.floor(posX/self.rect_width)]
 end

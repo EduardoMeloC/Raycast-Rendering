@@ -12,7 +12,13 @@ function MapData:new(rows, columns)
     for i=0, columns-1 do
         self.grid[i] = {}
         for j=0, rows-1 do
-            self.grid[i][j] = 0
+            self.grid[i][j] = (math.random(1, 10) == 1) and 1 or 0
         end
+    end
+    for i=0, columns-1 do
+        self.grid[i][0] = 1
+        self.grid[0][i] = 1
+        self.grid[i][columns-1] = 1
+        self.grid[columns-1][i] = 1
     end
 end
