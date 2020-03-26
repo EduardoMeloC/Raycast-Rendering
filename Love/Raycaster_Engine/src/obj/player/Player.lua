@@ -1,15 +1,23 @@
 Player = GameObject:extend()
+local ray_range = 300
+local wall_thickness = 10
+local ray_count = Window.width/wall_thickness
+
+-- function prototype
+local raycast
+local castAllRays
 
 function Player:new(family, x, y, opts)
     Player.super.new(self, family, x, y, opts)
 
+    self.size = 3 -- size is actually a radius
+    self.speed = 1
+    self.rotation = 0
 
-    Player.size = 3 -- size is actually a radius
-    Player.speed = 1
-    Player.rotation = 0
-    Player.FOV = 110
-    Player.ray_range = 100
-    Player.mouse_sensitivity = 0.1
+    self.FOV = 60
+    self.mouse_sensitivity = 0.1
+
+    self.rays = {}
 end
 
 function Player:mousemoved(x, y, dx, dy)
@@ -27,7 +35,7 @@ function Player:update(dt)
     -- collision detection
     local collidedX = false
     local collidedY = false
-    local currentNode = grid:getNode(self.x, self.y)
+    local currentNode = grid:getNodeAt(self.x, self.y)
     for i=currentNode.i-1, currentNode.i+1 do -- collision is tested on surrounding nodes
         for j=currentNode.j-1, currentNode.j+1 do
             local node = grid.nodes[i][j]
@@ -45,6 +53,9 @@ function Player:update(dt)
     if not collidedX then self.x = nextX end
     if not collidedY then self.y = nextY end
 
+    --cast rays
+    self.rays = castAllRays()
+    print(self.rays)
 
 end
 
@@ -55,13 +66,10 @@ function Player:draw(dt)
     love.graphics.rectangle("line", self.x - self.size, self.y - self.size, self.size*2, self.size*2)
 
     --draws player rays
-    love.graphics.setColor(1, 0, 0, 0.3)
-    local th = math.rad(self.FOV/2 + self.rotation) -- th stands for theta angle
-    love.graphics.line(self.x, self.y, self.x + math.cos(th) * self.ray_range, self.y - math.sin(th) * self.ray_range)
-    th = math.rad(-self.FOV/2 + self.rotation) -- th stands for theta angle
-    love.graphics.line(self.x, self.y, self.x + math.cos(th) * self.ray_range, self.y - math.sin(th) * self.ray_range)
-
-    love.graphics.setColor(Color.white)
+    love.graphics.setColor(1, 0, 0, 0.1)
+    for _, ray in ipairs(self.rays) do
+        love.graphics.line(ray.x1, ray.y1, ray.x2, ray.y2)
+    end
 end
 
 function Player:checkCollision(other, posX, posY)
@@ -90,4 +98,26 @@ function Player:checkCollision(other, posX, posY)
 
     if (distance <= self.size) then return true end
     return false
+end
+
+castAllRays = function()
+    local rays = {}
+    local ray_angle = player.rotation - (player.FOV/2)
+    local ray_step = player.FOV / ray_count
+
+    for i=0, ray_count do
+        ray = raycast(player.x, player.y, ray_angle, ray_range)
+        rays[i] = ray
+        ray_angle = ray_angle + ray_step
+    end
+    return rays
+end
+
+raycast = function(x, y, ray_angle, ray_distance)
+    -- ray will be a line filled with x1, y1, x2, y2
+    local ray = { x1 = x, y1 = y }
+    local th = math.rad(ray_angle)
+    ray.x2 = x + math.cos(th) * ray_distance
+    ray.y2 = y - math.sin(th) * ray_distance
+    return ray
 end

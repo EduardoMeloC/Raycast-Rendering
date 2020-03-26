@@ -22,8 +22,8 @@ end
 
 function Node:draw(rect_width, rect_height)
     if(self.nodeType == NodeType.Blocked) then
-        love.graphics.setColor(Color.black)
-        love.graphics.rectangle("fill", self.j * rect_width, self.i * rect_height, rect_width, rect_height)
+        --love.graphics.setColor(Color.black)
+        --love.graphics.rectangle("fill", self.j * rect_width, self.i * rect_height, rect_width, rect_height)
         love.graphics.setColor(Color.gray)
         love.graphics.rectangle("line", self.j * rect_width, self.i * rect_height, rect_width, rect_height)
     end

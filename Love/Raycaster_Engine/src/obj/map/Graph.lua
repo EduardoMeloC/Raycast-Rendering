@@ -49,7 +49,7 @@ function Graph:update(dt)
     ]]
 end
 
-function Graph:getNode(posX, posY)
+function Graph:getNodeAt(posX, posY)
     -- this function returns the node by the given position (not index)
     return self.nodes[math.floor(posY/self.rect_height)][math.floor(posX/self.rect_width)]
 end
