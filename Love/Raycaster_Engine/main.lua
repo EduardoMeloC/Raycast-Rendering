@@ -35,6 +35,8 @@ end
 function love.draw()
     -- draw scene
     if current_scene then current_scene:draw() end
+    love.graphics.setColor(Color.white)
+    love.graphics.print(love.timer.getFPS(), Window.width - 30, 10)
 end
 
 function setScene(scene_type, ...)

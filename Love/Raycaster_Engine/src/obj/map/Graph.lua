@@ -53,3 +53,8 @@ function Graph:getNodeAt(posX, posY)
     -- this function returns the node by the given position (not index)
     return self.nodes[math.floor(posY/self.rect_height)][math.floor(posX/self.rect_width)]
 end
+
+function Graph:hasWallAt(posX, posY)
+    if (posX < 0 or posX > Window.width or posY < 0 or posY > Window.width) then return true end
+    return self:getNodeAt(posX, posY).nodeType == NodeType.Blocked
+end
