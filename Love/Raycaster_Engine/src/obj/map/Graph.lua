@@ -26,9 +26,10 @@ function Graph:new(family, x, y, opts)
 end
 
 function Graph:draw()
+    local scale = self.family.scale
     for i=0, self.columns-1 do
         for j=0, self.rows-1 do
-            self.nodes[i][j]:draw(self.rect_width, self.rect_height)
+            self.nodes[i][j]:draw(self.rect_width * scale, self.rect_height * scale)
         end
     end
 end
