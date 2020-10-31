@@ -1,1 +1,0 @@
-../Löve_Lib/love .
