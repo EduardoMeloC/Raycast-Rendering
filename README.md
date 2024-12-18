@@ -12,6 +12,5 @@ The code structure was heavily inspired on the [BYTEPATH tutorial](https://love2
 ### Notes:
   * This is a very basic implementation, with no textured walls and no camera shearing.
   * There is probably some unused code from the project template I created as I followed BYTEPATH's tutorial.
-  * This was one of my first LÖVE-2D/Lua projects
 
 
